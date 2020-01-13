@@ -35,8 +35,19 @@ end
 CourseListQuery = CGQL::Client.parse <<-'GRAPHQL'
 query {
   allCourses {
-    id
     name
+    courseCode
+    state
+    _id
+    id
+    account {
+      _id
+      id
+      name
+    }
+    permissions {
+      manageGrades
+    }
   }
 }
 GRAPHQL
@@ -73,7 +84,9 @@ def client_context
   { access_token: ENV['ACCESS_TOKEN'] }
 end
 
-data = query(CourseQuery)
-data.course.modules_connection.nodes.each do |node|
-  puts node.name
+data = query(CourseListQuery)
+data.all_courses.each do |course|
+  if (course.permissions.manage_grades == true && course.state == 'available')
+    puts course.name
+  end
 end
