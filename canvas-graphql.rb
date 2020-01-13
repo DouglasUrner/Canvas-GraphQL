@@ -87,6 +87,6 @@ end
 data = query(CourseListQuery)
 data.all_courses.each do |course|
   if (course.permissions.manage_grades == true && course.state == 'available')
-    puts course.name
+    print "#{course.name} #{course.course_code} #{course._id} #{course.id}\n"
   end
 end
