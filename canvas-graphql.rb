@@ -40,11 +40,6 @@ query {
     state
     _id
     id
-    account {
-      _id
-      id
-      name
-    }
     permissions {
       manageGrades
     }
